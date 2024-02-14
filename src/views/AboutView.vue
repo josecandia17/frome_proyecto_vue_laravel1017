@@ -10,7 +10,7 @@ import authService from "../services/auth.service";
 
 const perfil = ref(null)
 
-async function funPerfil(){
+async function funPerfil (){
   const {data} = await authService.getPerfil();
 
   perfil.value = data

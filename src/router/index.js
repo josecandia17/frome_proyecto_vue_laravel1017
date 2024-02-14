@@ -8,7 +8,8 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      meta:{requireAuth:true}
     },
     {
       path: '/about',
@@ -16,14 +17,33 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
+      component: () => import('../views/AboutView.vue'),
+      meta:{requireAuth:true}
     },
     {
       path: '/login',
       name: 'login',
-      component: VistaLogin 
+      component: VistaLogin,
+      meta: {redirectIfAuth: true}
     }
   ]
+})
+
+//guard
+
+router.beforeEach((to, from, next)  => {
+  let token = localStorage.getItem("access_token")
+  console.log(to)
+  if(to.meta.requireAuth){
+    if(!token)
+    return next({name: 'login'});
+    return next()
+  }
+
+  if(to.meta.redirectIfAuth && token){
+    return next({name: 'about'})
+  }
+   return next()
 })
 
 export default router
