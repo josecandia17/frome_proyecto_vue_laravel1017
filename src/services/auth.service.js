@@ -1,20 +1,16 @@
-import { http } from "./Http";
+import { http } from "./Http"
 
-export default{
+export default {
     loginConLaravel(credenciales){
         return http().post("/v1/auth/login", credenciales);
     },
-
     funRegistro(datos){
         return http().post("/v1/auth/register", datos);
     },
-
-    getPerfil: function(){
+    getPerfil: function() {
         return http().get("/v1/auth/perfil");
     },
-
-    salir:() =>{
+    salir:() => {
         return http().post("/v1/auth/logout");
-
     }
 }

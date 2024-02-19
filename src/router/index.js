@@ -1,49 +1,57 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import VistaLogin from '../views/LoginView.vue'
+import AppLayoutVue from '@/layout/AppLayout.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView,
-      meta:{requireAuth:true}
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
-      meta:{requireAuth:true}
-    },
+
+
     {
       path: '/login',
       name: 'login',
       component: VistaLogin,
-      meta: {redirectIfAuth: true}
+      meta: { redirectIfAuth: true }
+    },
+    {
+      path: '/',
+      component: AppLayoutVue,
+      children: [
+        {
+          path: '/',
+          name: 'home',
+          component: HomeView,
+          meta: { requireAuth: true }
+        },
+        {
+          path: 'about',
+          name: 'about',
+
+          component: () => import('../views/AboutView.vue'),
+          meta: { requireAuth: true }
+        }
+      ]
     }
   ]
 })
 
 //guard
 
-router.beforeEach((to, from, next)  => {
+router.beforeEach((to, from, next) => {
   let token = localStorage.getItem("access_token")
-  console.log(to)
-  if(to.meta.requireAuth){
-    if(!token)
-    return next({name: 'login'});
+
+  if (to.meta.requireAuth) {
+    if (!token)
+      return next({ name: 'login' });
     return next()
   }
 
-  if(to.meta.redirectIfAuth && token){
-    return next({name: 'about'})
+  if (to.meta.redirectIfAuth && token) {
+    return next({ name: 'about' })
   }
-   return next()
+
+  return next()
 })
 
 export default router

@@ -1,6 +1,7 @@
 <template>
-  <div class="about">
-    <h1>{{perfil}}</h1>
+  <div class="card" v-if="perfil">
+    <h1>CORREO: {{perfil.email}}</h1>
+    <h1>NOMBRE: {{perfil.name}}</h1>
   </div>
 </template>
 
@@ -12,8 +13,8 @@ const perfil = ref(null)
 
 async function funPerfil (){
   const {data} = await authService.getPerfil();
-
   perfil.value = data
+
 }
 
 funPerfil()

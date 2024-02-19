@@ -20,8 +20,8 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
-import { useRouter } from 'vue-router'
-import authService from "./../services/auth.service"
+import { useRouter } from 'vue-router';
+import authService from "./../services/auth.service";
 
     // variables 
     //const correo= ref ("micorreo@gmail.com");
