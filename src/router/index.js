@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import VistaLogin from '../views/LoginView.vue'
 import AppLayoutVue from '@/layout/AppLayout.vue'
+import CategoriaVue from '@/views/admin/Categoria.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,6 +31,12 @@ const router = createRouter({
 
           component: () => import('../views/AboutView.vue'),
           meta: { requireAuth: true }
+        },
+        {
+          path: 'categoria',
+          name: 'Categoria',
+          component: CategoriaVue,
+          meta:{requireAuth:true}
         }
       ]
     }
