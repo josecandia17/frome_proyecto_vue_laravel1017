@@ -4,6 +4,8 @@ import VistaLogin from '../views/LoginView.vue'
 import AppLayoutVue from '@/layout/AppLayout.vue'
 import CategoriaVue from '@/views/admin/Categoria.vue';
 import ProductoVue from '@/views/admin/Producto.vue';
+import NuevoPedido from '@/views/admin/pedido/NuevoPedido.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -43,6 +45,12 @@ const router = createRouter({
           path: 'producto',
           name: 'Producto',
           component: ProductoVue,
+          meta: {requireAuth: true}
+        },
+        {
+          path: 'pedido/nuevo',
+          name: 'PedidoNuevo',
+          component: NuevoPedido,
           meta: {requireAuth: true}
         }
       ]
