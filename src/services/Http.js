@@ -1,8 +1,9 @@
 import axios from "axios"
-
 const url_base = "http://127.0.0.1:8000/api";
+//const url_base = "https://empresa.blumbit.net/back/public/api"
 
 export const http = () => {
+
     let token = localStorage.getItem("access_token")
 
     const api = axios.create({
@@ -12,9 +13,7 @@ export const http = () => {
             'Authorization': 'Bearer '+token
         }
     })
-    
-
-    // interceptar errores 401, 403 
+    // interceptar errores 401, 403
 
     api.interceptors.response.use(
         (response) => {
@@ -35,7 +34,5 @@ export const http = () => {
         },
     )
 
-
     return api;
-
 }

@@ -54,8 +54,7 @@
   <script setup>
   import { onMounted, ref } from "vue";
   import pedidoService from "../../../services/pedido.service";
-  import { jsPDF } from "jspdf";
-  import autoTable from 'jspdf-autotable'
+ 
   
   const pedidos = ref([]);
   const visibleProductos = ref(false);

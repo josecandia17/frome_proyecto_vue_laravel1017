@@ -1,19 +1,18 @@
 <template>
-    <!--<div>
+    <!--div>
         {{ usuario }}
         <h1>Login</h1>
-        <label for="e">Ingresar Correo</label>
+        <label for="e">Ingresar Correo:</label>
         <input type="email" v-model="usuario.email">
-         <span>{{ errors.email }}</span>
+        <span>{{ errors.email }}</span>
         <br>
-        <label>Ingresar Contraseña</label>
+        <label>Ingresar Contraseña:</label>
         <input type="password" v-model="usuario.password">
         <span>{{ errors.password }}</span>
         <br>
         <input type="button" value="Ingresar" v-on:click="funIngresar()">
+    </div-->
 
-       
-    </div>-->
     <div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
         <div class="flex flex-column align-items-center justify-content-center">
             <div style="border-radius: 56px; padding: 0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)">
@@ -46,50 +45,53 @@
             </div>
         </div>
     </div>
-        
 </template>
 
 <script setup>
-import { ref } from "vue";
-import axios from "axios";
-import { useRouter } from 'vue-router';
-import authService from "./../services/auth.service";
+    import { ref } from "vue";
+    import axios from "axios";
+    import { useRouter } from 'vue-router'
+    import authService from "./../services/auth.service"
+    
+    import { useAuthStore } from "@/stores/auth"
+    const auth = useAuthStore()
+    
 
-    // variables 
-    //const correo= ref ("micorreo@gmail.com");
-
-    //const clave=ref ("mipassword");
-
-    const usuario = ref ({ email: "", password:""})
+    // variables
+    // const correo = ref("micorreo@mail.com");
+    // const clave = ref("mipassword");
+    const usuario = ref({email: "", password: ""})
     const errors = ref({})
 
     const router = useRouter()
 
-    //metodos
+    // metodos
     async function funIngresar(){
-        try{
-            const { data }=await authService.loginConLaravel(usuario.value)
+        try {
+            const { data } = await authService.loginConLaravel(usuario.value)
             console.log("CON INTERCEPTOR: ", data)
-            errors.value={}
+            errors.value = {}
+
+            auth.setUsuario(data.usuario.email)
 
             localStorage.setItem("access_token", data.access_token);
+            localStorage.setItem("auth", data.usuario.email)
             router.push("/about")
-
-        }catch (error){
+           
+        } catch (error) {
             console.log(error.response.data)
             errors.value = error.response.data.errors
-            
         }
 
-    
-
-        /*axios.post("http://127.0.0.1:8000/api/v1/auth/login", usuario.value).then(
+        /*
+        axios.post("http://127.0.0.1:8000/api/v1/auth/login", usuario.value).then(
             (res) => {
                 console.log("CON AXIOS: ", res.data)
-            } 
+            }
         )*/
     }
 
 </script>
+
 
 

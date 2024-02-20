@@ -13,7 +13,7 @@ const model = ref([
         label: 'Gestión Productos',
         items: [
             { label: 'Categorias', icon: 'pi pi-fw pi-id-card', to: '/categoria' },
-            { label: 'Podructos', icon: 'pi pi-fw pi-check-square', to: '/producto' }
+            { label: 'Productos', icon: 'pi pi-fw pi-check-square', to: '/producto' }
         ]
     },
     {
