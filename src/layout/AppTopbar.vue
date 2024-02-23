@@ -2,6 +2,13 @@
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { useLayout } from '@/layout/composables/layout';
 import { useRouter } from 'vue-router';
+import authService from '../services/auth.service';
+
+// para pinia
+    import { useContadorStore } from "@/stores/contador"
+    import { useAuthStore } from "@/stores/auth"
+    const contador = useContadorStore()
+    const auth = useAuthStore()
 
 const { layoutConfig, onMenuToggle } = useLayout();
 
@@ -24,9 +31,18 @@ const logoUrl = computed(() => {
 const onTopBarMenuButton = () => {
     topbarMenuActive.value = !topbarMenuActive.value;
 };
-const onSettingsClick = () => {
+const onSalir = async () => {
     topbarMenuActive.value = false;
-    router.push('/documentation');
+    try {
+        const {data} = await authService.salir();
+        localStorage.removeItem("access_token");
+        router.push('/login');
+        
+    } catch (error) {
+        alert("Ocurrio un problema al salir")
+    }
+        
+    
 };
 const topbarMenuClasses = computed(() => {
     return {
@@ -64,7 +80,7 @@ const isOutsideClicked = (event) => {
     <div class="layout-topbar">
         <router-link to="/" class="layout-topbar-logo">
             <img :src="logoUrl" alt="logo" />
-            <span>SAKAI</span>
+            <span>MI EMPRESA</span>
         </router-link>
 
         <button class="p-link layout-menu-button layout-topbar-button" @click="onMenuToggle()">
@@ -76,6 +92,8 @@ const isOutsideClicked = (event) => {
         </button>
 
         <div class="layout-topbar-menu" :class="topbarMenuClasses">
+            <!--h1>{{contador.micontador}}</h1-->
+            <h5>{{ auth.usuario }}</h5>
             <button @click="onTopBarMenuButton()" class="p-link layout-topbar-button">
                 <i class="pi pi-calendar"></i>
                 <span>Calendar</span>
@@ -84,9 +102,9 @@ const isOutsideClicked = (event) => {
                 <i class="pi pi-user"></i>
                 <span>Profile</span>
             </button>
-            <button @click="onSettingsClick()" class="p-link layout-topbar-button">
-                <i class="pi pi-cog"></i>
-                <span>Settings</span>
+            <button @click="onSalir()" class="p-link layout-topbar-button">
+                <i class="pi pi-power-off"></i>
+                <span>Salir</span>
             </button>
         </div>
     </div>
