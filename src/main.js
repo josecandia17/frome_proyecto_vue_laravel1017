@@ -4,7 +4,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
-//primeVue
+// import primeVue
 import PrimeVue from 'primevue/config';
 import AutoComplete from 'primevue/autocomplete';
 import Accordion from 'primevue/accordion';
@@ -107,11 +107,10 @@ import '@/assets/styles.scss';
 
 const app = createApp(App)
 
-
 app.use(createPinia())
 app.use(router)
 
-//primeVue
+// primevue
 app.use(PrimeVue, { ripple: true });
 app.use(ToastService);
 app.use(DialogService);
@@ -121,6 +120,7 @@ app.directive('tooltip', Tooltip);
 app.directive('badge', BadgeDirective);
 app.directive('ripple', Ripple);
 app.directive('styleclass', StyleClass);
+
 
 app.component('Accordion', Accordion);
 app.component('AccordionTab', AccordionTab);
@@ -213,5 +213,4 @@ app.component('TriStateCheckbox', TriStateCheckbox);
 app.component('VirtualScroller', VirtualScroller);
 
 app.mount('#app');
-
 

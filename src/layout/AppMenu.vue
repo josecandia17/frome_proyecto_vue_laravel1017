@@ -30,6 +30,12 @@ const model = ref([
             { label: 'Usuarios', icon: 'pi pi-fw pi-prime', to: '/usuario' },
         ]
     },
+    {
+        label: 'Gestión Usuarios',
+        items: [
+            { label: 'Usuarios', icon: 'pi pi-fw pi-prime', to: '/usuario' },
+        ]
+    },
 ]);
 </script>
 

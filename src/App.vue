@@ -20,4 +20,3 @@
 -->
   <RouterView />
 </template>
-
